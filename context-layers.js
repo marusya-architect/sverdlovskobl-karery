@@ -1,27 +1,27 @@
 (()=>{
 const specs=[
- ['housing','П · Жилая территория','#c4ad7a','area'],
- ['places','П · Населённые пункты','#795548','point'],
- ['roads','Т · Основные дороги','#e8924a','line'],
- ['stops','Т · Остановки и станции','#1b72b3','point'],
- ['rail','Т · Железные дороги','#666b73','line'],
- ['forest','Л · Леса, парки и рекреационные территории','#6aa45c','area'],
- ['water','Л · Водоёмы','#53a5cf','area'],
- ['rivers','Л · Реки и каналы','#53a5cf','line'],
- ['protected','Ограничения · ООПТ по OSM','#b34281','area'],
- ['industry','И · Промышленные и деловые территории','#886aa7','area'],
- ['depth','ИГ · Глубина / высота объектов','#705c42','point']
+ ['housing','Жилая территория','#c4ad7a','area'],
+ ['places','Населённые пункты','#795548','point'],
+ ['roads','Основные дороги','#e8924a','line'],
+ ['stops','Остановки и станции','#1b72b3','point'],
+ ['rail','Железные дороги','#666b73','line'],
+ ['forest','Леса, парки и рекреационные территории','#6aa45c','area'],
+ ['water','Водоёмы','#53a5cf','area'],
+ ['rivers','Реки и каналы','#53a5cf','line'],
+ ['protected','ООПТ по OSM','#b34281','area'],
+ ['industry','Промышленные и деловые территории','#886aa7','area'],
+ ['depth','Глубина / высота объектов','#705c42','point']
 ];
 map.createPane('context');map.getPane('context').style.zIndex=350;
 map.createPane('context-depth');map.getPane('context-depth').style.zIndex=610;
 const section=document.createElement('section');section.id='context-layers';
 section.innerHTML='<h2>Данные для выбора сценария</h2><p class="context-note">Независимые слои · можно включать несколько. Подробные слои появляются при приближении карты; нужный масштаб указан после включения. Это исходные признаки, а не готовая оценка пригодности.</p><div class="q context-options"></div><details class="context-help"><summary>Что нужно для оценки по матрице</summary><div class="context-method"></div></details>';
 $('side').insertBefore(section,$('reset'));
-const explanation=`<p><b>П · Положение.</b> Границы и структура населённых пунктов, жилая застройка, центры и устойчивые связи с городом. На сайте используется приближение по расстоянию до жилой территории; оно не доказывает центральное положение.</p>
-<p><b>ИГ · Инженерно-геологическая сложность.</b> Рельеф и уклоны, глубина карьера / высота отвала, грунты, подземные воды, устойчивость бортов, опасные процессы. Есть глубина / высота из базы; инженерные изыскания и подтверждённые опасные процессы не подключены.</p>
-<p><b>Т · Транспортная доступность.</b> Дороги, подъезды, остановки и станции; пешие маршруты, расписания и время поездки. На сайте — расстояния по прямой: остановка ≤ 1 км → 3; ≤ 2,5 км или основная дорога ≤ 1 км → 2; иначе 1. Это не расчёт 10–15 минут пешком или 30–45 минут в час пик.</p>
-<p><b>Л · Ландшафтная выразительность.</b> Водоёмы, леса, рельеф, видовые точки и объекты туристического интереса. Слои воды и растительности дают контекст; самостоятельная рекреационная ценность требует обследования.</p>
-<p><b>И · Инвестиционная привлекательность.</b> Инженерные сети и мощности, спрос, права на землю, разрешённое использование, лицензии, стоимость подготовки и риски. Промышленные и деловые территории показаны только как окружение. Сейчас И — условная оценка по положению, доступности и состоянию объекта, без экономического расчёта.</p>
+const explanation=`<p><b>Положение.</b> Границы и структура населённых пунктов, жилая застройка, центры и устойчивые связи с городом. На сайте используется приближение по расстоянию до жилой территории; оно не доказывает центральное положение.</p>
+<p><b>Инженерно-геологическая сложность.</b> Рельеф и уклоны, глубина карьера / высота отвала, грунты, подземные воды, устойчивость бортов, опасные процессы. Есть глубина / высота из базы; инженерные изыскания и подтверждённые опасные процессы не подключены.</p>
+<p><b>Транспортная доступность.</b> Дороги, подъезды, остановки и станции; пешие маршруты, расписания и время поездки. На сайте — расстояния по прямой: остановка ≤ 1 км → 3; ≤ 2,5 км или основная дорога ≤ 1 км → 2; иначе 1. Это не расчёт 10–15 минут пешком или 30–45 минут в час пик.</p>
+<p><b>Ландшафтная выразительность.</b> Водоёмы, леса, рельеф, видовые точки и объекты туристического интереса. Слои воды и растительности дают контекст; самостоятельная рекреационная ценность требует обследования.</p>
+<p><b>Инвестиционная привлекательность.</b> Инженерные сети и мощности, спрос, права на землю, разрешённое использование, лицензии, стоимость подготовки и риски. Промышленные и деловые территории показаны только как окружение. Сейчас И — условная оценка по положению, доступности и состоянию объекта, без экономического расчёта.</p>
 <p><b>Проверка допустимости.</b> Нужны актуальные генпланы, ПЗЗ, ЕГРН/ЗОУИТ, водоохранные и санитарные зоны, режимы ООПТ, загрязнение и горные отводы. ООПТ по OSM — справочный слой, не официальный реестр ограничений. Отсутствие объекта в выгрузке не означает отсутствие ограничения.</p>
 <p><b>Источники.</b> Локальные слои OSM из папки «Диплома/кугис», обрезанные по Свердловской области; дата актуальности не подтверждена. Геометрия упрощена примерно на 30 м для обзора. Глубина / высота — та же база, что в карточках объектов. Слои окружения не отфильтровываются вместе с реестром.</p>`;
 section.querySelector('.context-method').innerHTML=explanation;
@@ -51,4 +51,23 @@ for(const [id,title,color,type] of specs){
   if(input.checked&&state.layer){state.layer.addTo(map);refresh(state)}legendSync();
  };
 }
+
+// Use the same thematic sections and chip controls as the EKB atlas.
+const groups=[['Застройка и землепользование',['housing','places','industry']],['Транспорт',['roads','stops','rail']],['Природа и рельеф',['forest','water','rivers','depth']],['Ограничения использования',['protected']]];
+for(const [heading,ids] of groups){
+ const group=document.createElement('section');group.className='layer-group';
+ const h=document.createElement('h2');h.textContent=heading;
+ const controls=document.createElement('div');controls.className='toggles';
+ const notice=document.createElement('p');notice.className='dlh';notice.setAttribute('aria-live','polite');
+ group.append(h,controls,notice);section.before(group);
+ const updateNotice=()=>{notice.textContent=ids.map(id=>states.find(s=>s.id===id)).filter(s=>s.input.checked&&/Загрузка|Приблизьте|Не удалось/.test(s.status.textContent)).map(s=>s.title+': '+s.status.textContent).join(' · ');notice.hidden=!notice.textContent};
+ for(const id of ids){const state=states.find(s=>s.id===id),button=document.createElement('button');button.type='button';button.className='chip';button.id='layer-'+id;button.textContent=state.title;button.setAttribute('aria-pressed','false');
+ button.onclick=async()=>{state.input.checked=!state.input.checked;button.setAttribute('aria-pressed',String(state.input.checked));button.disabled=true;try{await state.input.onchange()}finally{button.disabled=false;button.setAttribute('aria-pressed',String(state.input.checked));if(!state.input.checked&&/Не удалось/.test(state.status.textContent)){notice.hidden=false;notice.textContent=state.title+': '+state.status.textContent}else updateNotice()}};
+ controls.append(button);new MutationObserver(updateNotice).observe(state.status,{childList:true,characterData:true,subtree:true});
+ }
+}
+const help=section.querySelector('.context-help');help.querySelector('summary').textContent='Данные для оценки сценария';
+const existingHelp=[...$('side').children].find(e=>e.tagName==='DETAILS'&&e.querySelector('summary')?.textContent==='О данных и ограничениях');
+if(existingHelp)existingHelp.append(help);else section.before(help);
+section.hidden=true;
 })();
