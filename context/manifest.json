@@ -1,0 +1,62 @@
+[
+  {
+    "id": "housing",
+    "count": 21303,
+    "bytes": 5024962,
+    "source": "gis_osm_landuse_a_free_1.shp"
+  },
+  {
+    "id": "places",
+    "count": 1805,
+    "bytes": 255645,
+    "source": "gis_osm_places_free_1.shp"
+  },
+  {
+    "id": "roads",
+    "count": 9299,
+    "bytes": 1696820,
+    "source": "gis_osm_roads_free_1.shp"
+  },
+  {
+    "id": "stops",
+    "count": 5595,
+    "bytes": 814650,
+    "source": "gis_osm_transport_free_1.shp"
+  },
+  {
+    "id": "rail",
+    "count": 13881,
+    "bytes": 2356469,
+    "source": "gis_osm_railways_free_1.shp"
+  },
+  {
+    "id": "forest",
+    "count": 108216,
+    "bytes": 37330819,
+    "source": "gis_osm_landuse_a_free_1.shp"
+  },
+  {
+    "id": "water",
+    "count": 25984,
+    "bytes": 8885647,
+    "source": "gis_osm_water_a_free_1.shp"
+  },
+  {
+    "id": "rivers",
+    "count": 5071,
+    "bytes": 3492175,
+    "source": "gis_osm_waterways_free_1.shp"
+  },
+  {
+    "id": "protected",
+    "count": 72,
+    "bytes": 147617,
+    "source": "gis_osm_protected_areas_a_free_1.shp"
+  },
+  {
+    "id": "industry",
+    "count": 4959,
+    "bytes": 1228828,
+    "source": "gis_osm_landuse_a_free_1.shp"
+  }
+]
