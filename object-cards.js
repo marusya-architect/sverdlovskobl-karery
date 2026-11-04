@@ -1,9 +1,15 @@
 const objectCards = (() => {
   const links = [
     {
-      title: 'Новая Линза',
-      ids: ['SO-0001', 'SO-0748'],
-      source: 'В реестре отвал записан под названием «Отвал Новая Линза».'
+      title: 'Исетское месторождение у Каменска-Уральского',
+      ids: ['SO-0620', 'SO-0080', 'SO-0081', 'SO-0935'],
+      labels: {
+        'SO-0620': 'Карьер · запись ФГИС ЦС',
+        'SO-0080': 'Выработка · 21,9 га',
+        'SO-0081': 'Выработка · 17,4 га',
+        'SO-0935': 'Северный отвал'
+      },
+      source: 'Общий узел выработок. В исходной карточке карьера № 899 указаны два контура глубиной 108 и 24 м. В карточке отвала № 202 указано Исетское месторождение, северный отвал обмерен по снимку. Привязка относится к месторождению в целом.'
     }
   ];
   const highlighted = L.layerGroup().addTo(map);
@@ -42,7 +48,7 @@ const objectCards = (() => {
   function related(p) {
     const group = links.find(item => item.ids.includes(p.id));
     if (!group) return '';
-    const peers = group.ids.filter(id => id !== p.id).map(id => features.find(f => f.properties.id === id)?.properties.name).filter(Boolean);
+    const peers = group.ids.filter(id => id !== p.id).map(id => group.labels[id]);
     return '<div class="sec"><b>Связанные территории</b>' + esc(group.title) + ' · ' + esc(peers.join(', ')) +
       '<p>' + esc(group.source) + '</p><button type="button" class="chip" data-show-group="' + esc(p.id) + '">Показать вместе</button></div>';
   }
@@ -62,7 +68,7 @@ const objectCards = (() => {
     for (const feature of members) {
       const p = feature.properties;
       L.circleMarker(p.center, {radius: 8, weight: 3, color: '#1d2321', fillColor: '#fff', fillOpacity: 1})
-        .bindTooltip(esc(p.name), {permanent: true, direction: p.kind === 'отвал' ? 'top' : 'bottom'})
+        .bindTooltip(esc(group.labels[p.id]), {permanent: true, direction: p.kind === 'отвал' ? 'top' : 'bottom'})
         .on('click', () => L.popup().setLatLng(p.center).setContent(popup(p)).openOn(map))
         .addTo(highlighted);
     }
